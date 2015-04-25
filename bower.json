@@ -1,0 +1,27 @@
+{
+  "name": "react-autocomplete",
+  "version": "0.0.1",
+  "description": "Auto-complete ReactJS component",
+  "keywords": [
+    "react",
+    "autocomplete",
+    "autosuggest",
+    "typeahead"
+  ],
+  "authors": [
+    "talyssonoc <talyssonoc@gmail.com>"
+  ],
+  "main": "dist/react-autocomplete.js",
+  "license": "MIT",
+  "dependencies": {
+    "jst9": "^0.2.0",
+    "react": "^0.13.2"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

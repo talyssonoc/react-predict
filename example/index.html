@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>React AutoComplete example</title>
+
+  <link rel="stylesheet" href="autoSuggest.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="in"></div>
+
+  <script src="https://fb.me/react-0.13.2.js"></script>
+  <script src="https://fb.me/JSXTransformer-0.13.2.js"></script>
+  <script src="../node_modules/jst9/dist/jst9.js"></script>
+  <script src="../dist/react-autocomplete.js"></script>
+
+  <script type="text/jsx">
+    React.render(React.createElement(AutoComplete, {
+      words: [
+        "Lorem",
+        "ipsum",
+        "dolor",
+        "sit",
+        "amet,",
+        "consectetur",
+        "adipisicing",
+        "elit,",
+        "sed",
+        "do",
+        "eiusmod",
+        "tempor",
+        "incididunt",
+        "ut",
+        "labore",
+        "et",
+        "dolore",
+        "magna",
+        "aliqua.",
+        "Ut",
+        "enim",
+        "ad",
+        "minim",
+        "veniam,",
+        "quis",
+        "nostrud",
+        "exercitation",
+        "ullamco",
+        "laboris",
+        "nisi",
+        "ut",
+        "aliquip",
+        "ex",
+        "ea",
+        "commodo",
+        "consequat.",
+        "Duis",
+        "aute",
+        "irure",
+        "dolor",
+        "in",
+        "reprehenderit",
+        "in",
+        "voluptate",
+        "velit",
+        "esse",
+        "cillum",
+        "dolore",
+        "eu",
+        "fugiat",
+        "nulla",
+        "pariatur.",
+        "Excepteur",
+        "sint",
+        "occaecat",
+        "cupidatat",
+        "non",
+        "proident,",
+        "sunt",
+        "in",
+        "culpa",
+        "qui",
+        "officia",
+        "deserunt",
+        "mollit",
+        "anim",
+        "id",
+        "est",
+        "laborum"
+      ]
+    }), document.getElementById('in'));
+  </script>
+
+</body>
+</html>
