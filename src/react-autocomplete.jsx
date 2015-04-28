@@ -1,43 +1,16 @@
 var keyCodes = {
-  Backspace : 8,
   Enter : 13,
-  Shift : 16,
-  Ctrl : 17,
-  Alt : 18,
-  CapsLock : 20,
-  Escape : 27,
-  PageUp : 33,
-  PageDown : 34,
-  End : 35,
-  Home : 36,
-  ArrowLeft : 37,
   ArrowUp : 38,
   ArrowRight : 39,
-  ArrowDown : 40,
-  Delete : 46,
-  charA : 65,
-  charC : 67
+  ArrowDown : 40
 };
-
-var irrelevantKeys = [
-  keyCodes.Ctrl,
-  keyCodes.Shift,
-  keyCodes.Alt,
-  keyCodes.CapsLock,
-  keyCodes.ArrowRight,
-  keyCodes.ArrowLeft,
-  keyCodes.PageDown,
-  keyCodes.PageUp,
-  keyCodes.Home,
-  keyCodes.End
-];
 
 var AutoComplete = React.createClass({
 
   getDefaultProps: function() {
     return {
-      itemWrapper: 'div',
-      itemWrapperProps: {},
+      itemComponent: 'div',
+      itemProps: {},
       hideOnChoose: true,
       fillOnChoose: true,
       hideOnClickOutside: true,
@@ -51,81 +24,175 @@ var AutoComplete = React.createClass({
   getInitialState: function() {
     var words;
 
-    if(this.props.words instanceof jsT9) {
+    if(jsT9 && this.props.words instanceof jsT9) {
       words = this.props.words;
     }
     else {
       words = new jsT9(this.props.words, this.props.wordsSettings);
     }
 
-    var itemWrapperClass = classNames('autocomplete-option',
-                                      this.props.itemWrapperProps.className);
+    var itemClass = classNames('autocomplete-item',
+                                      this.props.itemProps.className);
 
-    if(this.props.itemWrapperProps.className) {
-      delete this.props.itemWrapperProps.className;
+    if(this.props.itemProps.className) {
+      delete this.props.itemProps.className;
     }
 
     return {
       words: words,
       open: false,
       currentWord: '',
+      selectedItemIndex: -1,
       currentSuggestions: [],
-      itemWrapperClass: itemWrapperClass,
-      itemWrapperProps: this.props.itemWrapperProps
+      itemClass: itemClass,
+      itemProps: this.props.itemProps
     };
   },
 
-  _handleKeyUp: function(e) {
+  _getKey: function _getKey(event) {
+    return event.keyCode || event.charCode;
+  },
+
+  _handleInput: function(event) {
     var word = React.findDOMNode(this.refs.input).value;
-    var key = e.keyCode || e.charCode;
-    var suggestions;
+    var key = this._getKey(event);
+
+    this.setState({
+      currentWord: word,
+      selectedItemIndex: -1
+    });
 
     if(!word.length) {
-      this.setState({
-        currentWord: word,
-        currentSuggestions: [],
-        open: false
-      });
+      this._handleEmptyInput();
     }
-    else if(key === keyCodes.Escape) {
-      this.setState({
-        open: false
-      });
+    else {
+      this._updateSuggestions(word);
     }
-    else if(this._isRelevantKey(key))
-    )) {
-      suggestions = this.state.words.predict(word);
 
-      this.setState({
-        currentWord: word,
-        currentSuggestions: suggestions,
-        open: !!suggestions.length
-      });
+  },
+
+  _handleCommandInput: function _handleCommandInput(event) {
+    var key = this._getKey(event);
+    var isDirectionalKey = this._isDirectionalKey(key);
+    var selectedItemRef = this.refs['item_' + this.state.selectedItemIndex];
+    var selectedItem;
+
+    if(this.state.selectedItemIndex > -1) {
+      selectedItem = React.findDOMNode(selectedItemRef);
+    }
+
+    if(key === keyCodes.Escape) {
+      this._closeItems();
+    }
+    else if(key === keyCodes.Enter) {
+      if(this.state.selectedItemIndex > -1) {
+        this._handleSelect(selectedItem.dataset.content);
+      }
+    }
+    else if(isDirectionalKey) {
+      this._changeSelectedItem(isDirectionalKey);
     }
   },
 
-  _isRelevantKey: function _isRelevantKey(key) {
-    return irrelevantKeys.indexOf(key) > -1
-          && !(e.ctrlKey && (key === keyCodes.charA || key === keyCodes.charC));
+  _updateSuggestions: function _updateSuggestions(word) {
+    word = word || this.state.currentWord;
+
+    var suggestions = this.state.words.predict(word);
+
+    this.setState({
+      currentSuggestions: suggestions,
+      open: !!suggestions.length
+    });
+  },
+
+  _handleEmptyInput: function _handleEmptyInput() {
+    this.setState({
+      currentSuggestions: [],
+      open: false
+    });
+  },
+
+  _closeItems: function _closeItems() {
+    this.setState({
+      open: false
+    });
+  },
+
+  _changeSelectedItem: function _changeSelectedItem(quantity) {
+    this.setState(function(prevState) {
+      var newIndex = (prevState.selectedItemIndex + quantity) % prevState.currentSuggestions.length;
+
+      if(newIndex < 0) {
+        newIndex = prevState.currentSuggestions.length - 1;
+      }
+
+      return {
+        selectedItemIndex: newIndex
+      };
+    });
+  },
+
+  _handleSelect: function _handleSelect(suggestion) {
+
+    var stateAfterSelect = {};
+
+    if(this.props.fillOnChoose) {
+      stateAfterSelect.currentWord = suggestion;
+    }
+
+    if(this.props.hideOnChoose) {
+      stateAfterSelect.open = false;
+    }
+
+    this.setState(stateAfterSelect);
+  },
+
+  _isDirectionalKey: function _isDirectionalKey(key) {
+    if(key === keyCodes.ArrowUp) {
+      return -1;
+    }
+
+    if(key === keyCodes.ArrowDown) {
+      return 1;
+    }
+
+    return 0;
   },
 
   render: function() {
 
     var listClassName = classNames('autocomplete-list', { open: this.state.open });
+    var selectedItemIndex = this.state.selectedItemIndex;
+    var ItemComponent = this.props.itemComponent;
 
-    var ItemWrapper = this.props.itemWrapper;
+    var suggestionsList = this.state.currentSuggestions.map(function(suggestion, index) {
+      var itemClassName = classNames(this.state.itemClass, {
+        hover: (index === selectedItemIndex)
+      });
 
-    var suggestionsList = this.state.currentSuggestions.map(function(suggestion) {
       return (
-        <ItemWrapper className={ this.state.itemWrapperClass } {...this.state.itemWrapperProps}>
-          { suggestion }
-        </ItemWrapper>
+        <ItemComponent
+          className={ itemClassName }
+          onClick={ this._handleSelect.bind(this, suggestion) }
+          ref={ 'item_' + index }
+          data-content={ suggestion }
+          {...this.state.itemProps}>
+            { suggestion }
+        </ItemComponent>
       );
+
     }.bind(this));
 
     return (
       <div className="autocomplete">
-        <input ref="input" type="text" className="input" onKeyUp={ this._handleKeyUp }/>
+        <input
+          ref="input"
+          type="text"
+          className="autocomplete-input"
+          onKeyDown={ this._handleCommandInput }
+          onChange={ this._handleInput }
+          value={ this.state.currentWord }/>
+
         <div className={ listClassName }>
           { suggestionsList }
         </div>
