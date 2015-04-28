@@ -14,8 +14,9 @@
   "main": "dist/react-autocomplete.js",
   "license": "MIT",
   "dependencies": {
-    "jst9": "^0.2.0",
-    "react": "^0.13.2"
+    "jst9": "^0.3.0",
+    "react": "^0.13.2",
+    "classnames": "~1.2.1"
   },
   "ignore": [
     "**/.*",
