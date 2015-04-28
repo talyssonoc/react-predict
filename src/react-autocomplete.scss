@@ -1,0 +1,38 @@
+$grey: rgba(150, 150, 150, 0.2);
+
+.autocomplete {
+  position: relative;
+  box-sizing: border-box;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .autocomplete-list {
+    width: 100%;
+    position: absolute;
+    border: 1px solid $grey;
+    box-shadow: 1px 1px 1px 1px $grey;
+    overflow: auto;
+    background: #FFF;
+    border-radius: 5px;
+    display: none;
+    z-index: 999;
+  }
+
+  .autocomplete-list.open {
+    display: block;
+  }
+
+  .autocomplete-option {
+    padding: 2px;
+    text-align: center;
+  }
+
+  .autocomplete-option:hover,
+  .autocomplete-option.hover {
+    background: $grey;
+    cursor: pointer;
+  }
+
+}

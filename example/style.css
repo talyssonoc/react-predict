@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
 	margin: 0;
 }
@@ -9,9 +13,8 @@ body {
 	padding: 5px;
 	margin-top: 30px;
 	border-radius: 5px;
-	box-shadow: 1px 1px 1px 1px rgba(150, 150, 150, 0.5); 
+	box-shadow: 1px 1px 1px 1px rgba(150, 150, 150, 0.5);
 	font-family: arial;
-	overflow: auto;
 	text-align: center;
 
 }
