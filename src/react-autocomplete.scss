@@ -8,6 +8,10 @@ $grey: rgba(150, 150, 150, 0.2);
     box-sizing: border-box;
   }
 
+  .autocomplete-input {
+    width: 100%;
+  }
+
   .autocomplete-list {
     width: 100%;
     position: absolute;
@@ -24,13 +28,13 @@ $grey: rgba(150, 150, 150, 0.2);
     display: block;
   }
 
-  .autocomplete-option {
+  .autocomplete-item {
     padding: 2px;
     text-align: center;
   }
 
-  .autocomplete-option:hover,
-  .autocomplete-option.hover {
+  .autocomplete-item:hover,
+  .autocomplete-item.hover {
     background: $grey;
     cursor: pointer;
   }
