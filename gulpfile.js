@@ -1,12 +1,16 @@
-var gulp = require('gulp');
-var clean = require('gulp-clean');
-var concat = require('gulp-concat');
-var umd = require('gulp-umd');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-var jshint = require('gulp-jshint');
-var jsx = require('gulp-react');
 var path = require('path');
+
+var gulp = require('gulp');
+
+var clean   = require('gulp-clean');
+var concat  = require('gulp-concat');
+var jshint  = require('gulp-jshint');
+var jsx     = require('gulp-react');
+var minify  = require('gulp-minify-css');
+var rename  = require('gulp-rename');
+var sass    = require('gulp-sass');
+var uglify  = require('gulp-uglify');
+var umd     = require('gulp-umd');
 
 gulp.task('clean', function () {
   return gulp.src('dist', { read: false })
@@ -20,10 +24,8 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('default', { verbose: true }));
 });
 
-gulp.task('build', ['clean'], function() {
-  return gulp.src([
-      'src/react-autocomplete.jsx'
-    ])
+gulp.task('build-js', function() {
+  return gulp.src('src/react-autocomplete.jsx')
     .pipe(jsx())
     .pipe(concat('react-autocomplete.js'))
     .pipe(umd({
@@ -50,6 +52,13 @@ gulp.task('build', ['clean'], function() {
             cjs: 'jst9',
             global: 'jsT9',
             param: 'jsT9'
+          },
+          {
+            name: 'classNames',
+            amd: 'classnames',
+            cjs: 'classnames',
+            global: 'classNames',
+            param: 'classNames'
           }
         ];
       },
@@ -60,4 +69,21 @@ gulp.task('build', ['clean'], function() {
     .pipe(rename('react-autocomplete.min.js'))
     .pipe(uglify())
     .pipe(gulp.dest('dist'));
+});
+
+gulp.task('build-css', function() {
+  return gulp.src('src/*.scss')
+    .pipe(sass())
+    .pipe(concat('react-autocomplete.css'))
+    .pipe(gulp.dest('dist'))
+    .pipe(rename('react-autocomplete.min.css'))
+    .pipe(minify())
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.task('build', ['clean', 'build-js', 'build-css']);
+
+gulp.task('watch', function() {
+  gulp.watch('src/**.jsx', ['build-js']);
+  gulp.watch('src/**.scss', ['build-css']);
 });
