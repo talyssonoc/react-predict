@@ -3,6 +3,8 @@
   box-sizing: border-box; }
   .autocomplete * {
     box-sizing: border-box; }
+  .autocomplete .autocomplete-input {
+    width: 100%; }
   .autocomplete .autocomplete-list {
     width: 100%;
     position: absolute;
@@ -15,9 +17,9 @@
     z-index: 999; }
   .autocomplete .autocomplete-list.open {
     display: block; }
-  .autocomplete .autocomplete-option {
+  .autocomplete .autocomplete-item {
     padding: 2px;
     text-align: center; }
-  .autocomplete .autocomplete-option:hover, .autocomplete .autocomplete-option.hover {
+  .autocomplete .autocomplete-item:hover, .autocomplete .autocomplete-item.hover {
     background: rgba(150, 150, 150, 0.2);
     cursor: pointer; }
