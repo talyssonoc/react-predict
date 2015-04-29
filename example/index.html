@@ -11,13 +11,15 @@
   <div id="in"></div>
 
   <script src="../bower_components/react/react-with-addons.min.js"></script>
-  <script src="https://fb.me/JSXTransformer-0.13.2.js"></script>
   <script src="../bower_components/jst9/dist/jst9.js"></script>
   <script src="../bower_components/classnames/index.js"></script>
   <script src="../dist/react-autocomplete.js"></script>
 
-  <script type="text/jsx">
+  <script>
     React.render(React.createElement(AutoComplete, {
+      wordsSettings: {
+        slackSearch: false
+      },
       words: [
         "Lorem",
         "ipsum",
