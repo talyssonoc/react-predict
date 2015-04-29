@@ -59,6 +59,13 @@ gulp.task('build-js', function() {
             cjs: 'classnames',
             global: 'classNames',
             param: 'classNames'
+          },
+          {
+            name: 'react-onclickoutside',
+            amd: 'react-onclickoutside',
+            cjs: 'react-onclickoutside',
+            global: 'OnClickOutside',
+            param: 'OnClickOutside'
           }
         ];
       },
