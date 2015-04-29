@@ -16,7 +16,8 @@
   "dependencies": {
     "jst9": "^0.4.0",
     "react": "^0.13.2",
-    "classnames": "~1.2.1"
+    "classnames": "~1.2.1",
+    "react-onclickoutside": "~0.2.3"
   },
   "ignore": [
     "**/.*",
