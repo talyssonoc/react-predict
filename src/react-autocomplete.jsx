@@ -6,6 +6,22 @@ var keyCodes = {
   ArrowDown : 40
 };
 
+var ItemList = React.createClass({
+  mixins: [OnClickOutside],
+
+  handleClickOutside: function handleClickOutside() {
+    this.props.handleClickOutside();
+  },
+
+  render: function() {
+    return (
+      <div {...this.props}>
+        {this.props.children}
+      </div>
+    );
+  }
+});
+
 var AutoComplete = React.createClass({
 
   getDefaultProps: function() {
@@ -36,7 +52,7 @@ var AutoComplete = React.createClass({
     var itemClass = classNames('autocomplete-item',
                                 this.props.itemProps.className);
 
-    var inputClass = className('autocomplete-input',
+    var inputClass = classNames('autocomplete-input',
                                 this.props.inputProps.className);
 
     if(this.props.itemProps.className) {
@@ -123,11 +139,13 @@ var AutoComplete = React.createClass({
     });
   },
 
-  _hideItems: function _hideItems() {
-    this.setState({
-      open: false,
-      selectedItemIndex: -1
-    });
+  _hideItems: function _hideItems(isClickOutside) {
+    if((isClickOutside && this.props.hideOnClickOutside) || !isClickOutside) {
+      this.setState({
+        open: false,
+        selectedItemIndex: -1
+      });
+    }
   },
 
   _changeSelectedItem: function _changeSelectedItem(quantity) {
@@ -195,7 +213,7 @@ var AutoComplete = React.createClass({
 
     var listClassName = classNames('autocomplete-list', { open: this.state.open });
     var selectedItemIndex = this.state.selectedItemIndex;
-    var ItemComponent = this.props.itemComponent;
+    var Item = this.props.itemComponent;
 
     var inputClassName = classNames('autocomplete-input', this.state.inputClassName);
 
@@ -205,7 +223,7 @@ var AutoComplete = React.createClass({
       });
 
       return (
-        <ItemComponent
+        <Item
           className={ itemClassName }
           onClick={ this._handleChoose.bind(this, suggestion) }
           onMouseEnter={ this._setSelectedItem.bind(this, index) }
@@ -214,7 +232,7 @@ var AutoComplete = React.createClass({
           data-content={ suggestion }
           {...this.state.itemProps}>
             { suggestion }
-        </ItemComponent>
+        </Item>
       );
 
     }.bind(this));
@@ -230,12 +248,13 @@ var AutoComplete = React.createClass({
           value={ this.state.currentWord }
           {...this.state.inputProps}/>
 
-        <div
+        <ItemList
           className={ listClassName }
           onMouseEnter={ this._setMouseOverList.bind(this, true) }
-          onMouseLeave={ this._setMouseOverList.bind(this, false) }>
+          onMouseLeave={ this._setMouseOverList.bind(this, false) }
+          handleClickOutside={ this._hideItems.bind(this, true) }>
           { suggestionsList }
-        </div>
+        </ItemList>
       </div>
     );
   }
