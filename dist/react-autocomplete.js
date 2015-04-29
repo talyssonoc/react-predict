@@ -24,6 +24,7 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
     return {
       itemComponent: 'div',
       itemProps: {},
+      inputProps: {},
       hideOnChoose: true,
       fillOnChoose: true,
       hideOnClickOutside: true,
@@ -45,10 +46,16 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
     }
 
     var itemClass = classNames('autocomplete-item',
-                                      this.props.itemProps.className);
+                                this.props.itemProps.className);
+
+    var inputClass = className('autocomplete-input',
+                                this.props.inputProps.className);
 
     if(this.props.itemProps.className) {
       delete this.props.itemProps.className;
+    }
+    if(this.props.inputProps.className) {
+      delete this.props.inputProps.className;
     }
 
     return {
@@ -59,7 +66,9 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
       mouseOverList: false,
       currentSuggestions: [],
       itemClass: itemClass,
-      itemProps: this.props.itemProps
+      itemProps: this.props.itemProps,
+      inputClass: inputClass,
+      inputProps: this.props.inputProps
     };
   },
 
@@ -200,6 +209,8 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
     var selectedItemIndex = this.state.selectedItemIndex;
     var ItemComponent = this.props.itemComponent;
 
+    var inputClassName = classNames('autocomplete-input', this.state.inputClassName);
+
     var suggestionsList = this.state.currentSuggestions.map(function(suggestion, index) {
       var itemClassName = classNames(this.state.itemClass, {
         hover: (index === selectedItemIndex)
@@ -222,13 +233,14 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
 
     return (
       React.createElement("div", {className: "autocomplete"}, 
-        React.createElement("input", {
+        React.createElement("input", React.__spread({
           ref: "input", 
           type: "text", 
           className: "autocomplete-input", 
           onKeyDown:  this._handleCommandInput, 
           onChange:  this._handleInput, 
-          value:  this.state.currentWord}), 
+          value:  this.state.currentWord}, 
+          this.state.inputProps)), 
 
         React.createElement("div", {
           className:  listClassName, 
