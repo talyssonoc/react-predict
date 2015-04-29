@@ -19,7 +19,7 @@ $grey: rgba(150, 150, 150, 0.2);
     box-shadow: 1px 1px 1px 1px $grey;
     overflow: auto;
     background: #FFF;
-    border-radius: 5px;
+    border-radius: 0 0 5px 5px;
     display: none;
     z-index: 999;
   }
