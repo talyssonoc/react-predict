@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "classnames": "^1.2.1",
-    "jst9": "^0.3.0",
+    "jst9": "^0.4.0",
     "react": "^0.13.2"
   },
   "devDependencies": {
