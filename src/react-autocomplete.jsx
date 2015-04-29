@@ -1,5 +1,6 @@
 var keyCodes = {
   Enter : 13,
+  Escape : 27,
   ArrowUp : 38,
   ArrowRight : 39,
   ArrowDown : 40
@@ -43,6 +44,7 @@ var AutoComplete = React.createClass({
       open: false,
       currentWord: '',
       selectedItemIndex: -1,
+      mouseOverList: false,
       currentSuggestions: [],
       itemClass: itemClass,
       itemProps: this.props.itemProps
@@ -82,11 +84,11 @@ var AutoComplete = React.createClass({
     }
 
     if(key === keyCodes.Escape) {
-      this._closeItems();
+      this._hideItems();
     }
     else if(key === keyCodes.Enter) {
       if(this.state.selectedItemIndex > -1) {
-        this._handleSelect(selectedItem.dataset.content);
+        this._handleChoose(selectedItem.dataset.content);
       }
     }
     else if(isDirectionalKey) {
@@ -112,27 +114,48 @@ var AutoComplete = React.createClass({
     });
   },
 
-  _closeItems: function _closeItems() {
+  _hideItems: function _hideItems() {
     this.setState({
-      open: false
+      open: false,
+      selectedItemIndex: -1
     });
   },
 
   _changeSelectedItem: function _changeSelectedItem(quantity) {
-    this.setState(function(prevState) {
-      var newIndex = (prevState.selectedItemIndex + quantity) % prevState.currentSuggestions.length;
+    if(!this.state.mouseOverList) {
+      this.setState(function(prevState) {
+        var newIndex = (prevState.selectedItemIndex + quantity) % prevState.currentSuggestions.length;
 
-      if(newIndex < 0) {
-        newIndex = prevState.currentSuggestions.length - 1;
-      }
+        if(newIndex < 0) {
+          newIndex = prevState.currentSuggestions.length - 1;
+        }
 
-      return {
-        selectedItemIndex: newIndex
-      };
+        return {
+          selectedItemIndex: newIndex
+        };
+      });
+    }
+  },
+
+  _setSelectedItem: function _setSelectedItem(index) {
+    this.setState({
+      selectedItemIndex: index
     });
   },
 
-  _handleSelect: function _handleSelect(suggestion) {
+  _resetSelectedItem: function _resetSelectedItem() {
+    this.setState({
+      selectedItemIndex: -1
+    });
+  },
+
+  _setMouseOverList: function _setMouseOverList(mouseOverList) {
+    this.setState({
+      mouseOverList: mouseOverList
+    });
+  },
+
+  _handleChoose: function _handleChoose(suggestion) {
 
     var stateAfterSelect = {};
 
@@ -173,7 +196,9 @@ var AutoComplete = React.createClass({
       return (
         <ItemComponent
           className={ itemClassName }
-          onClick={ this._handleSelect.bind(this, suggestion) }
+          onClick={ this._handleChoose.bind(this, suggestion) }
+          onMouseEnter={ this._setSelectedItem.bind(this, index) }
+          onMouseLeave={ this._resetSelectedItem }
           ref={ 'item_' + index }
           data-content={ suggestion }
           {...this.state.itemProps}>
@@ -193,7 +218,10 @@ var AutoComplete = React.createClass({
           onChange={ this._handleInput }
           value={ this.state.currentWord }/>
 
-        <div className={ listClassName }>
+        <div
+          className={ listClassName }
+          onMouseEnter={ this._setMouseOverList.bind(this, true) }
+          onMouseLeave={ this._setMouseOverList.bind(this, false) }>
           { suggestionsList }
         </div>
       </div>
