@@ -1,6 +1,6 @@
 {
   "undef": true,
-  "predef": ["root", "React", "jsT9", "classNames"],
+  "predef": ["root", "React", "jsT9", "classNames", "OnClickOutside"],
   "camelcase": true,
   "curly": true,
   "eqeqeq": true,
