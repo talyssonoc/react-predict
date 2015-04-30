@@ -4,6 +4,7 @@ var gulp = require('gulp');
 
 var clean   = require('gulp-clean');
 var concat  = require('gulp-concat');
+var jest    = require('gulp-jest');
 var jshint  = require('gulp-jshint');
 var jsx     = require('gulp-react');
 var minify  = require('gulp-minify-css');
@@ -93,4 +94,21 @@ gulp.task('build', ['clean', 'build-js', 'build-css']);
 gulp.task('watch', function() {
   gulp.watch('src/**.jsx', ['build-js']);
   gulp.watch('src/**.scss', ['build-css']);
+});
+
+gulp.task('test', ['build-js'], function () {
+    return gulp.src('test').pipe(jest({
+        scriptPreprocessor: 'support/preprocessor.js',
+        unmockedModulePathPatterns: [
+            'node_modules/react'
+        ],
+        testDirectoryName: 'test',
+        testPathIgnorePatterns: [
+            'node_modules',
+            'test/support'
+        ],
+        moduleFileExtensions: [
+            'js'
+        ]
+    }));
 });
