@@ -15,7 +15,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "gulp build"
+    "build": "gulp build",
+    "test": "gulp test --harmony"
   },
   "dependencies": {
     "classnames": "^1.2.2",
