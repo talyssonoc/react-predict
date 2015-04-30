@@ -228,7 +228,7 @@ var AutoComplete = React.createClass({
           onClick={ this._handleChoose.bind(this, suggestion) }
           onMouseEnter={ this._setSelectedItem.bind(this, index) }
           onMouseLeave={ this._resetSelectedItem }
-          ref={ 'item_' + index }
+          key={ 'item_' + index }
           data-content={ suggestion }
           {...this.state.itemProps}>
             { suggestion }
