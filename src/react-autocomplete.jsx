@@ -217,25 +217,32 @@ var AutoComplete = React.createClass({
 
     var inputClassName = classNames('autocomplete-input', this.state.inputClassName);
 
-    var suggestionsList = this.state.currentSuggestions.map(function(suggestion, index) {
-      var itemClassName = classNames(this.state.itemClass, {
-        hover: (index === selectedItemIndex)
-      });
+    var suggestionsList;
 
-      return (
-        <Item
-          className={ itemClassName }
-          onClick={ this._handleChoose.bind(this, suggestion) }
-          onMouseEnter={ this._setSelectedItem.bind(this, index) }
-          onMouseLeave={ this._resetSelectedItem }
-          key={ 'item_' + index }
-          data-content={ suggestion }
-          {...this.state.itemProps}>
-            { suggestion }
-        </Item>
-      );
+    if(this.state.open) {
+      suggestionsList = this.state.currentSuggestions.map(function(suggestion, index) {
+        var itemClassName = classNames(this.state.itemClass, {
+          hover: (index === selectedItemIndex)
+        });
 
-    }.bind(this));
+        return (
+          <Item
+            className={ itemClassName }
+            onClick={ this._handleChoose.bind(this, suggestion) }
+            onMouseEnter={ this._setSelectedItem.bind(this, index) }
+            onMouseLeave={ this._resetSelectedItem }
+            key={ 'item_' + index }
+            data-content={ suggestion }
+            {...this.state.itemProps}>
+              { suggestion }
+          </Item>
+        );
+
+      }.bind(this));
+    }
+    else {
+      suggestionsList = [];
+    }
 
     return (
       <div className="autocomplete">
