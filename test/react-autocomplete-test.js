@@ -70,4 +70,27 @@ describe('AutoComplete', function() {
 
   });
 
+
+  it('`fillOnChoose` option: fills input box when option is clicked', function() {
+
+    var autoComplete = TestUtils.renderIntoDocument(
+      <AutoComplete words={lorem}/>
+    );
+
+    var input = TestUtils.findRenderedDOMComponentWithTag(autoComplete, 'input');
+
+    input.getDOMNode().value = 'l';
+
+    // Types "l"
+    TestUtils.Simulate.change(input, {
+      keyCode: 108
+    });
+
+    var items = TestUtils.scryRenderedDOMComponentsWithClass(autoComplete, 'autocomplete-item');
+
+    TestUtils.Simulate.click(items[0]);
+
+    expect(input.getDOMNode().value).toEqual('labore');
+
+  });
 });
