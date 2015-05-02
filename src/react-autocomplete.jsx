@@ -29,11 +29,9 @@ var AutoComplete = React.createClass({
       itemComponent: 'div',
       itemProps: {},
       inputProps: {},
-      hideOnChoose: true,
       fillOnChoose: true,
+      hideOnChoose: true,
       hideOnClickOutside: true,
-      debounce: false,
-      debounceTime: 500,
       words: [],
       wordsSettings: {}
     };
@@ -49,10 +47,10 @@ var AutoComplete = React.createClass({
       words = new jsT9(this.props.words, this.props.wordsSettings);
     }
 
-    var itemClass = classNames('autocomplete-item',
+    var itemClassName = classNames('autocomplete-item',
                                 this.props.itemProps.className);
 
-    var inputClass = classNames('autocomplete-input',
+    var inputClassName = classNames('autocomplete-input',
                                 this.props.inputProps.className);
 
     if(this.props.itemProps.className) {
@@ -69,9 +67,9 @@ var AutoComplete = React.createClass({
       selectedItemIndex: -1,
       mouseOverList: false,
       currentSuggestions: [],
-      itemClass: itemClass,
+      itemClassName: itemClassName,
       itemProps: this.props.itemProps,
-      inputClass: inputClass,
+      inputClassName: inputClassName,
       inputProps: this.props.inputProps
     };
   },
@@ -221,7 +219,7 @@ var AutoComplete = React.createClass({
 
     if(this.state.open) {
       suggestionsList = this.state.currentSuggestions.map(function(suggestion, index) {
-        var itemClassName = classNames(this.state.itemClass, {
+        var itemClassName = classNames(this.state.itemClassName, {
           hover: (index === selectedItemIndex)
         });
 
@@ -249,7 +247,7 @@ var AutoComplete = React.createClass({
         <input
           ref="input"
           type="text"
-          className="autocomplete-input"
+          className={ inputClassName }
           onKeyDown={ this._handleCommandInput }
           onChange={ this._handleInput }
           value={ this.state.currentWord }
