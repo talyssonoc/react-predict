@@ -50,14 +50,10 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
   },
 
   getInitialState: function() {
-    var words;
+    var treeAndWords = this._getTreeAndWords(this.props.words, this.props.wordsSettings);
 
-    if(jsT9 && this.props.words instanceof jsT9) {
-      words = this.props.words;
-    }
-    else {
-      words = new jsT9(this.props.words, this.props.wordsSettings);
-    }
+    var words = treeAndWords.words;
+    var tree = treeAndWords.tree;
 
     var itemClassName = classNames('autocomplete-item',
                                 this.props.itemProps.className);
@@ -73,6 +69,7 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
     }
 
     return {
+      tree: tree,
       words: words,
       open: false,
       currentWord: '',
@@ -83,6 +80,24 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
       itemProps: this.props.itemProps,
       inputClassName: inputClassName,
       inputProps: this.props.inputProps
+    };
+  },
+
+  _getTreeAndWords: function _getTreeAndWords(_words, _wordsSettings) {
+    var words = [];
+    var tree;
+
+    if(jsT9 && _words instanceof jsT9) {
+      tree = _words;
+    }
+    else {
+      tree = new jsT9(_words, _wordsSettings);
+      words = _words;
+    }
+
+    return {
+      words: words,
+      tree: tree
     };
   },
 
@@ -134,7 +149,7 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
   _updateSuggestions: function _updateSuggestions(word) {
     word = word || this.state.currentWord;
 
-    var suggestions = this.state.words.predict(word);
+    var suggestions = this.state.tree.predict(word);
 
     this.setState({
       currentSuggestions: suggestions,
