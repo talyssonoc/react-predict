@@ -1,6 +1,6 @@
 {
   "name": "react-predict",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Text prediction component for ReactJS",
   "keywords": [
     "react",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/talyssonoc/jst9.git"
+    "url": "git://github.com/talyssonoc/react-predict.git"
   },
   "bugs": {
     "url": "https://github.com/talyssonoc/react-predict/issues"
