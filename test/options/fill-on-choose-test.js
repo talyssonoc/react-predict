@@ -1,4 +1,4 @@
-var autoCompletePath = '../../dist/react-autocomplete.js';
+var autoCompletePath = '../../dist/react-predict.js';
 var loremPath = '../support/lorem.json';
 
 jest.dontMock(autoCompletePath);
@@ -17,7 +17,7 @@ describe('AutoComplete: `fillOnChoose`', function() {
       <AutoComplete words={ lorem } fillOnChoose={ true }/>
     );
 
-    var input = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'autocomplete-input');
+    var input = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'react-predict-input');
 
     input.getDOMNode().value = 'l';
 
@@ -26,7 +26,7 @@ describe('AutoComplete: `fillOnChoose`', function() {
       keyCode: 108
     });
 
-    var items = TestUtils.scryRenderedDOMComponentsWithClass(autoComplete, 'autocomplete-item');
+    var items = TestUtils.scryRenderedDOMComponentsWithClass(autoComplete, 'react-predict-item');
 
     TestUtils.Simulate.click(items[0]);
 
@@ -40,7 +40,7 @@ describe('AutoComplete: `fillOnChoose`', function() {
       <AutoComplete words={ lorem } fillOnChoose={ false }/>
     );
 
-    var input = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'autocomplete-input');
+    var input = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'react-predict-input');
 
     input.getDOMNode().value = 'l';
 
@@ -49,7 +49,7 @@ describe('AutoComplete: `fillOnChoose`', function() {
       keyCode: 108
     });
 
-    var items = TestUtils.scryRenderedDOMComponentsWithClass(autoComplete, 'autocomplete-item');
+    var items = TestUtils.scryRenderedDOMComponentsWithClass(autoComplete, 'react-predict-item');
 
     TestUtils.Simulate.click(items[0]);
 

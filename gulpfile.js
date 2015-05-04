@@ -19,23 +19,23 @@ gulp.task('clean', function () {
 });
 
 gulp.task('lint', function() {
-  return gulp.src('src/react-autocomplete.jsx')
+  return gulp.src('src/react-predict.jsx')
     .pipe(jsx())
     .pipe(jshint())
     .pipe(jshint.reporter('default', { verbose: true }));
 });
 
 gulp.task('build-js', function() {
-  return gulp.src('src/react-autocomplete.jsx')
+  return gulp.src('src/react-predict.jsx')
     .pipe(jsx())
-    .pipe(concat('react-autocomplete.js'))
+    .pipe(concat('react-predict.js'))
     .pipe(umd({
       exports: function(file) {
-        return 'AutoComplete';
+        return 'Predict';
       },
 
       namespace: function() {
-        return 'AutoComplete';
+        return 'Predict';
       },
 
       dependencies: function() {
@@ -74,7 +74,7 @@ gulp.task('build-js', function() {
       template: path.join(__dirname, '/src/umdTemplate.js')
     }))
     .pipe(gulp.dest('dist'))
-    .pipe(rename('react-autocomplete.min.js'))
+    .pipe(rename('react-predict.min.js'))
     .pipe(uglify())
     .pipe(gulp.dest('dist'));
 });
@@ -82,9 +82,9 @@ gulp.task('build-js', function() {
 gulp.task('build-css', function() {
   return gulp.src('src/*.scss')
     .pipe(sass())
-    .pipe(concat('react-autocomplete.css'))
+    .pipe(concat('react-predict.css'))
     .pipe(gulp.dest('dist'))
-    .pipe(rename('react-autocomplete.min.css'))
+    .pipe(rename('react-predict.min.css'))
     .pipe(minify())
     .pipe(gulp.dest('dist'));
 });

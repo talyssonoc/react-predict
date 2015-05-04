@@ -1,15 +1,3 @@
-(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(['react', 'jst9', 'classnames', 'react-onclickoutside'], function(React, jsT9, classNames, OnClickOutside) {
-    	return (root.AutoComplete = factory(React, jsT9, classNames, OnClickOutside));
-    });
-  } else if (typeof exports === 'object') {
-    module.exports = factory(require('react'), require('jst9'), require('classnames'), require('react-onclickoutside'));
-  } else {
-    root.AutoComplete = factory(root.React, root.jsT9, root.classNames, root.OnClickOutside);
-  }
-}(this, function(React, jsT9, classNames, OnClickOutside) {
-'use strict';
 var keyCodes = {
   Enter : 13,
   Escape : 27,
@@ -18,7 +6,7 @@ var keyCodes = {
   ArrowDown : 40
 };
 
-var ItemList = React.createClass({displayName: "ItemList",
+var ItemList = React.createClass({
   mixins: [OnClickOutside],
 
   handleClickOutside: function handleClickOutside() {
@@ -27,14 +15,14 @@ var ItemList = React.createClass({displayName: "ItemList",
 
   render: function() {
     return (
-      React.createElement("div", React.__spread({},  this.props), 
-        this.props.children
-      )
+      <div {...this.props}>
+        {this.props.children}
+      </div>
     );
   }
 });
 
-var AutoComplete = React.createClass({displayName: "AutoComplete",
+var Predict = React.createClass({
 
   getDefaultProps: function() {
     return {
@@ -55,10 +43,10 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
     var words = treeAndWords.words;
     var tree = treeAndWords.tree;
 
-    var itemClassName = classNames('autocomplete-item',
+    var itemClassName = classNames('react-predict-item',
                                 this.props.itemProps.className);
 
-    var inputClassName = classNames('autocomplete-input',
+    var inputClassName = classNames('react-predict-input',
                                 this.props.inputProps.className);
 
     if(this.props.itemProps.className) {
@@ -236,11 +224,11 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
 
   render: function() {
 
-    var listClassName = classNames('autocomplete-list', { open: this.state.open });
+    var listClassName = classNames('react-predict-list', { open: this.state.open });
     var selectedItemIndex = this.state.selectedItemIndex;
     var Item = this.props.itemComponent;
 
-    var inputClassName = classNames('autocomplete-input', this.state.inputClassName);
+    var inputClassName = classNames('react-predict-input', this.state.inputClassName);
 
     var suggestionsList;
 
@@ -251,16 +239,16 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
         });
 
         return (
-          React.createElement(Item, React.__spread({
-            className:  itemClassName, 
-            onClick:  this._handleChoose.bind(this, suggestion), 
-            onMouseEnter:  this._setSelectedItem.bind(this, index), 
-            onMouseLeave:  this._resetSelectedItem, 
-            key:  'item_' + index, 
-            "data-content":  suggestion }, 
-            this.state.itemProps), 
-               suggestion 
-          )
+          <Item
+            className={ itemClassName }
+            onClick={ this._handleChoose.bind(this, suggestion) }
+            onMouseEnter={ this._setSelectedItem.bind(this, index) }
+            onMouseLeave={ this._resetSelectedItem }
+            key={ 'item_' + index }
+            data-content={ suggestion }
+            {...this.state.itemProps}>
+              { suggestion }
+          </Item>
         );
 
       }.bind(this));
@@ -270,28 +258,25 @@ var AutoComplete = React.createClass({displayName: "AutoComplete",
     }
 
     return (
-      React.createElement("div", {className: "autocomplete"}, 
-        React.createElement("input", React.__spread({
-          ref: "input", 
-          type: "text", 
-          className:  inputClassName, 
-          onKeyDown:  this._handleCommandInput, 
-          onChange:  this._handleInput, 
-          value:  this.state.currentWord}, 
-          this.state.inputProps)), 
+      <div className="react-predict">
+        <input
+          ref="input"
+          type="text"
+          className={ inputClassName }
+          onKeyDown={ this._handleCommandInput }
+          onChange={ this._handleInput }
+          value={ this.state.currentWord }
+          {...this.state.inputProps}/>
 
-        React.createElement(ItemList, {
-          className:  listClassName, 
-          onMouseEnter:  this._setMouseOverList.bind(this, true), 
-          onMouseLeave:  this._setMouseOverList.bind(this, false), 
-          handleClickOutside:  this._hideItems.bind(this, true) }, 
-           suggestionsList 
-        )
-      )
+        <ItemList
+          className={ listClassName }
+          onMouseEnter={ this._setMouseOverList.bind(this, true) }
+          onMouseLeave={ this._setMouseOverList.bind(this, false) }
+          handleClickOutside={ this._hideItems.bind(this, true) }>
+          { suggestionsList }
+        </ItemList>
+      </div>
     );
   }
 
 });
-
-return AutoComplete;
-}));

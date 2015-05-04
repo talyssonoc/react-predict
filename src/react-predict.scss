@@ -1,6 +1,6 @@
 $grey: rgba(150, 150, 150, 0.2);
 
-.autocomplete {
+.react-predict {
   position: relative;
   box-sizing: border-box;
 
@@ -8,11 +8,11 @@ $grey: rgba(150, 150, 150, 0.2);
     box-sizing: border-box;
   }
 
-  .autocomplete-input {
+  .react-predict-input {
     width: 100%;
   }
 
-  .autocomplete-list {
+  .react-predict-list {
     width: 100%;
     position: absolute;
     border: 1px solid $grey;
@@ -24,17 +24,17 @@ $grey: rgba(150, 150, 150, 0.2);
     z-index: 999;
   }
 
-  .autocomplete-list.open {
+  .react-predict-list.open {
     display: block;
   }
 
-  .autocomplete-item {
+  .react-predict-item {
     padding: 2px;
     text-align: center;
   }
 
-  .autocomplete-item:hover,
-  .autocomplete-item.hover {
+  .react-predict-item:hover,
+  .react-predict-item.hover {
     background: $grey;
     cursor: pointer;
   }

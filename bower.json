@@ -1,7 +1,7 @@
 {
-  "name": "react-autocomplete",
+  "name": "react-predict",
   "version": "0.0.1",
-  "description": "Auto-complete ReactJS component",
+  "description": "Text prediction component for ReactJS",
   "keywords": [
     "react",
     "autocomplete",
@@ -11,7 +11,7 @@
   "authors": [
     "talyssonoc <talyssonoc@gmail.com>"
   ],
-  "main": "dist/react-autocomplete.js",
+  "main": "dist/react-predict.js",
   "license": "MIT",
   "dependencies": {
     "jst9": "^0.4.0",

@@ -1,26 +1,26 @@
-# react-autocomplete
+# react-predict
 
 ReactJS for input with autocomplete based on list of words.
 
-[![Build Status](https://travis-ci.org/talyssonoc/react-autocomplete.svg?branch=master)](https://travis-ci.org/talyssonoc/react-autocomplete) [![Code Climate](https://codeclimate.com/github/talyssonoc/react-autocomplete/badges/gpa.svg)](https://codeclimate.com/github/talyssonoc/react-autocomplete)
+[![Build Status](https://travis-ci.org/talyssonoc/react-predict.svg?branch=master)](https://travis-ci.org/talyssonoc/react-predict) [![Code Climate](https://codeclimate.com/github/talyssonoc/react-predict/badges/gpa.svg)](https://codeclimate.com/github/talyssonoc/react-predict)
 
 ## Installation
 
 With npm:
 
 ```sh
-  $ npm install react-autocomplete
+  $ npm install react-predict
 ```
 
 With Bower:
 
 ```sh
-  $ bower install react-autocomplete
+  $ bower install react-predict
 ```
 
 Or use the files on `dist` folder.
 
-__Don't forget to import the `react-autocomplete.css` (or `react-autocomplete.min.css`) file too.__
+__Don't forget to import the `react-predict.css` (or `react-predict.min.css`) file too.__
 
 ## Usage
 
@@ -31,13 +31,13 @@ __Don't forget to import the `react-autocomplete.css` (or `react-autocomplete.mi
     'Sparta'
   ];
 
-  React.render(<AutoComplete words={ words } {...otherOptions /* See below */}/>,
+  React.render(<Predict words={ words } {...otherOptions /* See below */}/>,
               document.getElementById('search-box'));
 ```
 
 ## Options
 
-You can pass the following props for AutoComplete:
+You can pass the following props for Predict:
 
 * words: Array of words or [jsT9](https://www.npmjs.com/package/jst9) instance. (default: `[]`)
 * wordsSettings: If `words` option is an array, wordsSettings will be passed when instancing the jsT9 tree. (default: `{}`)

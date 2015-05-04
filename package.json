@@ -1,17 +1,25 @@
 {
-  "name": "react-autocomplete",
+  "name": "react-predict",
   "version": "0.0.1",
-  "description": "Auto-complete ReactJS component",
+  "description": "Text prediction component for ReactJS",
   "keywords": [
     "react",
     "autocomplete",
     "autosuggest",
     "typeahead"
   ],
-  "main": "dist/react-autocomplete",
+  "homepage": "https://github.com/talyssonoc/react-predict",
+  "main": "dist/react-predict",
   "author": {
     "name": "Talysson",
     "email": "talyssonoc@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/talyssonoc/jst9.git"
+  },
+  "bugs": {
+    "url": "https://github.com/talyssonoc/react-predict/issues"
   },
   "license": "MIT",
   "scripts": {

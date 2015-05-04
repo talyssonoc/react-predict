@@ -1,4 +1,4 @@
-var autoCompletePath = '../../dist/react-autocomplete.js';
+var autoCompletePath = '../../dist/react-predict.js';
 var loremPath = '../support/lorem.json';
 
 jest.dontMock(autoCompletePath);
@@ -17,7 +17,7 @@ describe('AutoComplete: `itemProps`', function() {
       <AutoComplete words={ lorem } itemProps={{ className: 'my-item' }}/>
     );
 
-    var input = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'autocomplete-input');
+    var input = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'react-predict-input');
 
     input.getDOMNode().value = 'l';
 
@@ -26,7 +26,7 @@ describe('AutoComplete: `itemProps`', function() {
       keyCode: 108
     });
 
-    var items = TestUtils.scryRenderedDOMComponentsWithClass(autoComplete, 'autocomplete-item');
+    var items = TestUtils.scryRenderedDOMComponentsWithClass(autoComplete, 'react-predict-item');
 
     items.forEach(function(item, index) {
       expect(item.getDOMNode().className).toContain('my-item');
