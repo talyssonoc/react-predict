@@ -27,7 +27,7 @@ __Don't forget to import the `react-predict.css` (or `react-predict.min.css`) fi
 ```jsx
   var words = [
     'This',
-    'is'
+    'is',
     'Sparta'
   ];
 
