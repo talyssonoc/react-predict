@@ -1,0 +1,25 @@
+.react-predict {
+  position: relative;
+  box-sizing: border-box; }
+  .react-predict * {
+    box-sizing: border-box; }
+  .react-predict .react-predict-input {
+    width: 100%; }
+  .react-predict .react-predict-list {
+    width: 100%;
+    position: absolute;
+    border: 1px solid rgba(150, 150, 150, 0.2);
+    box-shadow: 1px 1px 1px 1px rgba(150, 150, 150, 0.2);
+    overflow: auto;
+    background: #FFF;
+    border-radius: 0 0 5px 5px;
+    display: none;
+    z-index: 999; }
+  .react-predict .react-predict-list.open {
+    display: block; }
+  .react-predict .react-predict-item {
+    padding: 2px;
+    text-align: center; }
+  .react-predict .react-predict-item:hover, .react-predict .react-predict-item.hover {
+    background: rgba(150, 150, 150, 0.2);
+    cursor: pointer; }

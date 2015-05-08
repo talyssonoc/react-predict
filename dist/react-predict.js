@@ -44,6 +44,7 @@ var Predict = React.createClass({displayName: "Predict",
       fillOnChoose: true,
       hideOnChoose: true,
       hideOnClickOutside: true,
+      mapSuggestion: function indentity(suggestion) { return suggestion; },
       words: [],
       wordsSettings: {}
     };
@@ -138,7 +139,7 @@ var Predict = React.createClass({displayName: "Predict",
     }
     else if(key === keyCodes.Enter) {
       if(this.state.selectedItemIndex > -1) {
-        this._handleChoose(selectedItem.dataset.content);
+        this._handleChoose(selectedItem.dataset.suggestion);
       }
     }
     else if(isDirectionalKey) {
@@ -242,7 +243,7 @@ var Predict = React.createClass({displayName: "Predict",
 
     var inputClassName = classNames('react-predict-input', this.state.inputClassName);
 
-    var suggestionsList;
+    var suggestionsList = [];
 
     if(this.state.open) {
       suggestionsList = this.state.currentSuggestions.map(function(suggestion, index) {
@@ -250,23 +251,23 @@ var Predict = React.createClass({displayName: "Predict",
           hover: (index === selectedItemIndex)
         });
 
+        var mappedSuggestion = this.props.mapSuggestion(suggestion);
+
         return (
           React.createElement(Item, React.__spread({
             className:  itemClassName, 
-            onClick:  this._handleChoose.bind(this, suggestion), 
+            onClick:  this._handleChoose.bind(this, mappedSuggestion), 
             onMouseEnter:  this._setSelectedItem.bind(this, index), 
             onMouseLeave:  this._resetSelectedItem, 
             key:  'item_' + index, 
-            "data-content":  suggestion }, 
+            "data-suggestion":  suggestion, 
+            "data-mapped-suggestion":  mappedSuggestion }, 
             this.state.itemProps), 
-               suggestion 
+               mappedSuggestion 
           )
         );
 
       }.bind(this));
-    }
-    else {
-      suggestionsList = [];
     }
 
     return (
