@@ -1,6 +1,6 @@
 {
   "name": "react-predict",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Text prediction component for ReactJS",
   "keywords": [
     "react",
