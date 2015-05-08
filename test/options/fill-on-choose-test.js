@@ -1,23 +1,23 @@
-var autoCompletePath = '../../dist/react-predict.js';
+var predictPath = '../../dist/react-predict.js';
 var loremPath = '../support/lorem.json';
 
-jest.dontMock(autoCompletePath);
+jest.dontMock(predictPath);
 jest.dontMock(loremPath);
 
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
-var AutoComplete = require(autoCompletePath);
+var Predict = require(predictPath);
 var lorem = require(loremPath);
 
-describe('AutoComplete: `fillOnChoose`', function() {
+describe('Predict: `fillOnChoose`', function() {
 
   it('`fillOnChoose: true`', function() {
 
-    var autoComplete = TestUtils.renderIntoDocument(
-      <AutoComplete words={ lorem } fillOnChoose={ true }/>
+    var predict = TestUtils.renderIntoDocument(
+      <Predict words={ lorem } fillOnChoose={ true }/>
     );
 
-    var input = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'react-predict-input');
+    var input = TestUtils.findRenderedDOMComponentWithClass(predict, 'react-predict-input');
 
     input.getDOMNode().value = 'l';
 
@@ -26,7 +26,7 @@ describe('AutoComplete: `fillOnChoose`', function() {
       keyCode: 108
     });
 
-    var items = TestUtils.scryRenderedDOMComponentsWithClass(autoComplete, 'react-predict-item');
+    var items = TestUtils.scryRenderedDOMComponentsWithClass(predict, 'react-predict-item');
 
     TestUtils.Simulate.click(items[0]);
 
@@ -36,11 +36,11 @@ describe('AutoComplete: `fillOnChoose`', function() {
 
   it('`fillOnChoose: false`', function() {
 
-    var autoComplete = TestUtils.renderIntoDocument(
-      <AutoComplete words={ lorem } fillOnChoose={ false }/>
+    var predict = TestUtils.renderIntoDocument(
+      <Predict words={ lorem } fillOnChoose={ false }/>
     );
 
-    var input = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'react-predict-input');
+    var input = TestUtils.findRenderedDOMComponentWithClass(predict, 'react-predict-input');
 
     input.getDOMNode().value = 'l';
 
@@ -49,7 +49,7 @@ describe('AutoComplete: `fillOnChoose`', function() {
       keyCode: 108
     });
 
-    var items = TestUtils.scryRenderedDOMComponentsWithClass(autoComplete, 'react-predict-item');
+    var items = TestUtils.scryRenderedDOMComponentsWithClass(predict, 'react-predict-item');
 
     TestUtils.Simulate.click(items[0]);
 

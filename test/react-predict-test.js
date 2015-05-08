@@ -1,23 +1,23 @@
-var autoCompletePath = '../dist/react-predict.js';
+var predictPath = '../dist/react-predict.js';
 var loremPath = './support/lorem.json';
 
-jest.dontMock(autoCompletePath);
+jest.dontMock(predictPath);
 jest.dontMock(loremPath);
 
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
-var AutoComplete = require(autoCompletePath);
+var Predict = require(predictPath);
 var lorem = require(loremPath);
 
-describe('AutoComplete', function() {
+describe('Predict', function() {
 
   it('shows options when entered "l" on input', function() {
 
-    var autoComplete = TestUtils.renderIntoDocument(
-      <AutoComplete words={lorem}/>
+    var predict = TestUtils.renderIntoDocument(
+      <Predict words={lorem}/>
     );
 
-    var input = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'react-predict-input');
+    var input = TestUtils.findRenderedDOMComponentWithClass(predict, 'react-predict-input');
 
     input.getDOMNode().value = 'l';
 
@@ -26,8 +26,8 @@ describe('AutoComplete', function() {
       keyCode: 108
     });
 
-    var list = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'react-predict-list');
-    var items = TestUtils.scryRenderedDOMComponentsWithClass(autoComplete, 'react-predict-item');
+    var list = TestUtils.findRenderedDOMComponentWithClass(predict, 'react-predict-list');
+    var items = TestUtils.scryRenderedDOMComponentsWithClass(predict, 'react-predict-item');
 
     expect(items.length).toBe(3);
 
@@ -43,11 +43,11 @@ describe('AutoComplete', function() {
   });
 
   it('adds hover class to element selected with arrows', function() {
-    var autoComplete = TestUtils.renderIntoDocument(
-      <AutoComplete words={lorem}/>
+    var predict = TestUtils.renderIntoDocument(
+      <Predict words={lorem}/>
     );
 
-    var input = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'react-predict-input');
+    var input = TestUtils.findRenderedDOMComponentWithClass(predict, 'react-predict-input');
 
     input.getDOMNode().value = 'l';
 
@@ -61,8 +61,8 @@ describe('AutoComplete', function() {
       keyCode: 40
     });
 
-    var list = TestUtils.findRenderedDOMComponentWithClass(autoComplete, 'react-predict-list');
-    var items = TestUtils.scryRenderedDOMComponentsWithClass(autoComplete, 'react-predict-item');
+    var list = TestUtils.findRenderedDOMComponentWithClass(predict, 'react-predict-list');
+    var items = TestUtils.scryRenderedDOMComponentsWithClass(predict, 'react-predict-item');
 
     expect(items[0].getDOMNode().className).toContain('hover');
     expect(items[1].getDOMNode().className).not.toContain('hover');
